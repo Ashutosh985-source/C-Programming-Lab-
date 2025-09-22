@@ -1,0 +1,491 @@
+                                                              EXPERIMENT - 01  [Installation,Environment Setup and starting with c language]
+1) Write a c program to print "Hello World".
+#include <stdio.h>
+
+int main() {
+    // printf() is a library function that prints formatted output to the screen.
+    // The text inside the double quotes is the string that will be printed.
+    // \n is a special character that represents a new line.
+    printf("Hello World\n");
+
+    // The return 0; statement indicates that the program has executed successfully.
+    return 0;
+}
+
+
+
+
+2) Write a c program to print the address in multiple lines(new line).
+
+
+#include <stdio.h>
+
+int main() {
+    printf("Ashutosh Singh\n");
+    printf("OFF Campus Upes\n");
+    printf("UPES DEHRADUN\n");
+    
+
+    return 0;
+}
+
+
+
+
+3) Write a program that prompts the user to enter their name and age.
+
+
+#include <stdio.h>
+#include <string.h> // Required for strcspn
+
+int main() {
+    char name[50];
+    int age;
+
+    // Prompt the user to enter their name
+    printf("Enter your name: ");
+
+   
+    printf("Enter your age: ");
+
+  
+    scanf("%d", &age);
+
+   
+    printf("Name:%s\n", name);
+    printf(""age:%d\n", age);
+
+    return 0;
+}
+
+
+
+
+
+4) Write a c program to add two numbers,take number from user.
+
+#include <stdio.h>
+
+int main() {
+    // Declare integer variables to store the two numbers and their sum.
+    int num1, num2, sum;
+
+    // Prompt the user to enter the first number.
+    printf("Enter the first number: ");
+    scanf("%d", &num1);
+
+    // Prompt the user to enter the second number.
+    printf("Enter the second number: ");
+
+    // Read the integer and store it in num2.
+    scanf("%d", &num2);
+
+    // Calculate the sum of the two numbers.
+    sum = num1 + num2;
+
+    // Print the result to the console.
+    // %d are format specifiers that act as placeholders for the variables.
+    printf("The sum of %d and %d is: %d\n", num1, num2, sum);
+
+    return 0; // Indicates successful program execution.
+}
+
+
+
+
+                                                                      EXPERIMENT : 02 [Operators]
+
+
+1) WAP a C program to calculate the area and perimeter of a rectangle based on its
+length and width.
+
+
+
+#include <stdio.h>
+
+int main() {
+    float length, width, area, perimeter;
+
+    // Prompt the user to enter the length of the rectangle
+    printf("Enter the length of the rectangle: ");
+    scanf("%f", &length);
+
+    // Prompt the user to enter the width of the rectangle
+    printf("Enter the width of the rectangle: ");
+    scanf("%f", &width);
+
+    // Calculate the area
+    area = length * width;
+
+    // Calculate the perimeter
+    perimeter = 2 * (length + width);
+
+    // Display the results with two decimal places
+    printf("The area of the rectangle is: %.2f\n", area);
+    printf("The perimeter of the rectangle is: %.2f\n", perimeter);
+
+    return 0;
+}
+
+
+
+2) . WAP a C program to Convert temperature from Celsius to Fahrenheit using the
+formula: F = (C * 9/5) + 32.
+
+#include <stdio.h>
+
+int main() {
+    float celsius, fahrenheit;
+
+    // Prompt user to enter temperature in Celsius
+    printf("Enter temperature in Celsius: ");
+    scanf("%f", &celsius);
+
+    // Apply the formula to convert Celsius to Fahrenheit
+    fahrenheit = (celsius * 9.0 / 5.0) + 32.0;
+
+    // Display the converted temperature
+    printf("Temperature in Fahrenheit: %.2f\n", fahrenheit);
+
+    return 0;
+}  
+
+
+                                                              EXPERIMENT :3.1  [Conditional Statement]
+
+1) 1. WAP to take check if the triangle is valid or not. If the validity is established, do
+check if the triangle is isosceles, equilateral, right angle, or scalene. Take sides of
+the triangle as input from a user.
+
+
+#include <stdio.h>
+int main() {
+    int a, b, c;
+
+    // Prompt user for input
+    printf("Enter the three sides of the triangle: ");
+    scanf("%d %d %d", &a, &b, &c);
+
+    // --- 1. Check for Triangle Validity ---
+    // A triangle is valid if the sum of its two sides is greater than the third side.
+    if ((a + b > c) && (a + c > b) && (b + c > a)) {
+        printf("The triangle is valid.\n");
+
+        // --- 2. Classify the Triangle by Sides ---
+        if (a == b && b == c) {
+            printf("It is an Equilateral triangle.\n");
+        } else if (a == b || b == c || a == c) {
+            printf("It is an Isosceles triangle.\n");
+        } else {
+            printf("It is a Scalene triangle.\n");
+        }
+
+        // --- 3. Check for Right Angle ---
+        // Using the Pythagorean theorem: a^2 + b^2 = c^2
+        if ((a * a + b * b == c * c) || (a * a + c * c == b * b) || (b * b + c * c == a * a)) {
+            printf("It is also a Right-Angled triangle.\n");
+        }
+
+    } else {
+        printf("The triangle is not valid.\n");
+    }
+
+    return 0;
+}
+
+
+
+2) WAP to compute the BMI Index of the person and print the BMI values as per the
+following ranges. You can use the following formula to compute BMI=
+weight(kgs)/Height(Mts)*Height(Mts)
+
+#include <stdio.h>
+
+int main() {
+    // Declare variables for weight, height, and BMI.
+    // We use 'float' to allow for decimal values.
+    float weight_kg, height_m, bmi;
+
+    // --- 1. Get User Input ---
+    printf("Enter your weight in kilograms (kgs): ");
+    scanf("%f", &weight_kg);
+
+    printf("Enter your height in meters (mts): ");
+    scanf("%f", &height_m);
+
+    // --- 2. Validate Input and Calculate BMI ---
+    // Check if height is a valid positive number to avoid division by zero.
+    if (height_m <= 0 || weight_kg <= 0) {
+        printf("Error: Weight and height must be positive numbers.\n");
+        return 1; // Exit the program with an error code
+    } else {
+        // Calculate BMI using the formula: weight / (height * height)
+        bmi = weight_kg / (height_m * height_m);
+
+        // --- 3. Display the Results ---
+        // Print the calculated BMI, formatted to two decimal places.
+        printf("\nYour BMI is: %.2f\n", bmi);
+
+        // --- 4. Classify and Print the BMI Category ---
+        if (bmi < 18.5) {
+            printf("Category: Underweight\n");
+        } else if (bmi >= 18.5 && bmi < 25) {
+            printf("Category: Normal weight\n");
+        } else if (bmi >= 25 && bmi < 30) {
+            printf("Category: Overweight\n");
+        } else { // This covers bmi >= 30
+            printf("Category: Obese\n");
+        }
+    }
+
+    return 0; // Indicates successful execution
+}
+
+
+3) 3. WAP to check if three points (x1,y1), (x2,y2) and (x3,y3) are collinear or not.
+#include <stdio.h>
+
+int main() {
+    // Use double for better precision with coordinates
+    double x1, y1, x2, y2, x3, y3;
+
+    // --- 1. Get Input for Three Points ---
+    printf("Enter coordinates for point 1 (x1 y1): ");
+    scanf("%lf %lf", &x1, &y1);
+
+    printf("Enter coordinates for point 2 (x2 y2): ");
+    scanf("%lf %lf", &x2, &y2);
+
+    printf("Enter coordinates for point 3 (x3 y3): ");
+    scanf("%lf %lf", &x3, &y3);
+
+    // --- 2. Check for Collinearity using the Area Formula ---
+    // Calculate the value of the expression: x1(y2-y3) + x2(y3-y1) + x3(y1-y2)
+    // If this value is 0, the area of the triangle is 0, and the points are collinear.
+    double area_check = x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2);
+
+    // --- 3. Print the Result ---
+    if (area_check == 0) {
+        printf("\nThe points are collinear.\n");
+    } else {
+        printf("\nThe points are not collinear.\n");
+    }
+
+    return 0;
+}
+
+
+
+                                               EXPERIMENT : 3.2  [Loops]
+1) WAP to enter numbers till the user wants. At the end, it should display the count
+of positive, negative, and Zeroes entered.
+
+#include <stdio.h>
+
+int main() {
+    int num;
+    char choice;
+
+    // Initialize counters for each category to zero.
+    int positiveCount = 0;
+    int negativeCount = 0;
+    int zeroCount = 0;
+
+    // A do-while loop ensures the user can enter at least one number.
+    do {
+        // Prompt the user for a number.
+        printf("Enter a number: ");
+        scanf("%d", &num);
+
+        // Check the number and increment the appropriate counter.
+        if (num > 0) {
+            positiveCount++;
+        } else if (num < 0) {
+            negativeCount++;
+        } else {
+            zeroCount++;
+        }
+
+        // Ask the user if they want to continue.
+        printf("Do you want to enter another number? (y/n): ");
+        
+        // The space before %c is important to consume any leftover newline
+        // characters from the previous scanf, preventing issues.
+        scanf(" %c", &choice);
+
+    } while (choice == 'y' || choice == 'Y'); // Continue if the user enters 'y' or 'Y'.
+
+    // Print the final results after the loop ends.
+    printf("\n--- Results ---\n");
+    printf("Positive numbers entered: %d\n", positiveCount);
+    printf("Negative numbers entered: %d\n", negativeCount);
+    printf("Zeroes entered:         %d\n", zeroCount);
+
+    return 0;
+}
+
+
+2) 2. WAP to print the multiplication table of the number entered by the user. It should
+be in the correct formatting. Num * 1 = Num
+
+#include <stdio.h>
+
+int main() {
+    int num, i;
+
+    // Prompt the user to enter a number.
+    printf("Enter a number to print its multiplication table: ");
+    scanf("%d", &num);
+
+    printf("\n--- Multiplication Table of %d ---\n", num);
+
+    // A 'for' loop is used to iterate from 1 to 10.
+    for (i = 1; i <= 10; i++) {
+        // Print each line of the table in the specified format.
+        // %d * %d = %d is replaced by the values of num, i, and (num * i).
+        printf("%d * %d = %d\n", num, i, (num * i));
+    }
+
+    return 0;
+}
+
+
+
+3) WAP to generate the following set of output.
+
+a)
+1 
+23
+456
+
+#include <stdio.h>
+
+int main() {
+    int rows = 3; // The number of rows to print
+    int number = 1; // This variable will hold the number to be printed, starting with 1
+
+    // The outer loop controls the number of rows.
+    for (int i = 1; i <= rows; i++) {
+        
+        // The inner loop controls how many numbers are printed in each row.
+        // For row 'i', it prints 'i' numbers.
+        for (int j = 1; j <= i; j++) {
+            printf("%d", number);
+            number++; // Increment the number for the next print
+        }
+        
+        // After the inner loop finishes, print a newline to move to the next row.
+        printf("\n");
+    }
+
+    return 0;
+}
+
+
+b)
+11
+121
+1331
+14641
+
+#include <stdio.h>
+
+int main() {
+    int rows = 5; // We need 5 rows to generate up to 1 4 6 4 1
+
+    // Outer loop to handle the number of rows.
+    for (int i = 0; i < rows; i++) {
+        long long coef = 1; // First element in any row is always 1
+
+        // Inner loop to calculate and print the numbers in each row.
+        for (int j = 0; j <= i; j++) {
+            if (j == 0) {
+                // The first term in a line is always 1.
+                coef = 1;
+            } else {
+                // Calculate the next coefficient from the previous one.
+                coef = coef * (i - j + 1) / j;
+            }
+            printf("%lld", coef);
+        }
+        printf("\n"); // Move to the next line after printing a row.
+    }
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5) . Ramanujan Number is the smallest number that can be expressed as the sum of
+two cubes in two different ways. WAP to print all such numbers up to a
+reasonable limit.
+ Example of Ramanujan number: 1729
+ 12^3 + 1^3 and 10^3 + 9^3. for a number L=20(that is limit)
+
+
+
+#include <stdio.h>
+#include <math.h> // Required for the cbrt() and round() functions
+
+int main() {
+    int limit;
+    printf("Enter a limit (note: the first Ramanujan number is 1729): ");
+    scanf("%d", &limit);
+
+    printf("\nFinding Ramanujan-type numbers up to %d...\n", limit);
+
+    // Loop through 'a' to form the first pair (a, b)
+    for (int a = 1; a * a * a < limit; a++) {
+        // Loop through 'b', starting from a+1 to avoid duplicate pairs
+        for (int b = a + 1; a * a * a + b * b * b <= limit; b++) {
+            long long current_sum = (long long)a * a * a + (long long)b * b * b;
+
+            // Now, search for a second, different pair (c, d)
+            // Start 'c' from a+1 to ensure the pairs are distinct
+            for (int c = a + 1; c * c * c < current_sum; c++) {
+
+                // We are looking for a 'd' such that c^3 + d^3 = current_sum.
+                // Instead of a fourth loop, we can calculate 'd' directly.
+                // d^3 = current_sum - c^3
+                long long remainder = current_sum - (long long)c * c * c;
+                int d = round(cbrt(remainder));
+
+                // Verify if 'd' is a perfect cube and forms a valid second pair (c, d)
+                // where c < d and {a,b} is different from {c,d}.
+                // The loop structure (c > a) already ensures the pairs are different.
+                if ((long long)d * d * d == remainder && d > c && b != c && b != d) {
+                    printf("%lld = %d^3 + %d^3 = %d^3 + %d^3\n",
+                           current_sum, a, b, c, d);
+                }
+            }
+        }
+    }
+
+    return 0;
+}
