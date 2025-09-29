@@ -325,7 +325,7 @@ int main() {
 }
 
 
-2) 2. WAP to print the multiplication table of the number entered by the user. It should
+2)  WAP to print the multiplication table of the number entered by the user. It should
 be in the correct formatting. Num * 1 = Num
 
 #include <stdio.h>
@@ -489,3 +489,346 @@ int main() {
 
     return 0;
 }
+
+
+                                                             EXPERIMENT :-04  [Variable and scope of variable]
+Q1.) Declare a global variable outside all functions and use it inside various functions to
+understand its accessibility.
+
+code:- 
+#include <stdio.h>
+int global_var = 10;
+
+// Function to display the value of the global variable
+void display_value() {
+    printf("Inside display_value() function, global_var = %d\n", global_var);
+}
+
+// Function to modify the value of the global variable
+void modify_value() {
+    printf("Inside modify_value() function, changing global_var...\n");
+    global_var = global_var + 5; // Modifying the global variable
+}
+
+int main() {
+    // Accessing the global variable from the main function
+    printf("Inside main() function (initial), global_var = %d\n", global_var);
+    
+    // Calling a function that reads the global variable
+    display_value();
+    
+    // Calling a function that modifies the global variable
+    modify_value();
+    
+    // Calling the display function again to see the change
+    display_value();
+    
+    // Accessing the modified global variable again from main
+    printf("Inside main() function (final), global_var = %d\n", global_var);
+    
+    return 0;
+}
+
+
+
+Q2.)  Declare a local variable inside a function and try to access it outside the function.
+Compare this with accessing the global variable from within the function.
+
+code:-
+#include <stdio.h>
+
+
+void myFunction() {
+    int localVar = 10;   // Local variable (only inside this function)
+    printf("Inside function: localVar = %d\n", localVar);
+}
+
+int main() {
+    myFunction();
+    // Trying to access localVar outside will give an error:
+    //printf("Outside function: localVar = %d\n", localVar); // ❌ ERROR
+    return 0;
+}
+
+
+Q3.) Declare variables within different code blocks (enclosed by curly braces) and test
+their accessibility within and outside those blocks.
+
+code:-#include <stdio.h>
+
+int main() {
+    int x = 10;  // Declared in main block
+    printf("In main block: x = %d\n", x);
+
+    {
+        int y = 20;  // Declared in inner block
+        printf("In inner block: x = %d, y = %d\n", x, y);
+    }
+
+    // printf("Outside inner block: y = %d\n", y); // ❌ ERROR: y not accessible here
+
+    {
+        int z = 30;  // Declared in another inner block
+        printf("In another block: x = %d, z = %d\n", x, z);
+    }
+
+    // printf("Outside another block: z = %d\n", z); // ❌ ERROR: z not accessible here
+
+    return 0;
+}
+
+
+Q4.)  Declare a static local variable inside a function. Observe how its value persists
+across function calls.
+
+code:-
+
+#include <stdio.h>
+
+void counterFunction() {
+    static int count = 0;  // Static local variable
+    count++;
+    printf("Count = %d\n", count);
+}
+
+int main() {
+    counterFunction();  // First call
+    counterFunction();  // Second call
+    counterFunction();  // Third call
+    return 0;
+}
+
+
+
+
+
+
+                                                              EXPERIMENT :05 [Arrays]
+Q1.) WAP to read a list of integers and store it in a single dimensional array. Write a C
+program to print the second largest integer in a list of integers.
+
+code:-
+#include <stdio.h>
+
+int main() {
+    int n, i;
+    
+    // Step 1: Input the number of elements
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    if (n < 2) {
+        printf("Need at least two numbers to find the second largest.\n");
+        return 0;
+    }
+
+    int arr[n];
+
+    // Step 2: Read array elements
+    printf("Enter %d integers:\n", n);
+    for (i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    // Step 3: Initialize largest and second largest
+    int largest, second_largest;
+    if (arr[0] > arr[1]) {
+        largest = arr[0];
+        second_largest = arr[1];
+    } else {
+        largest = arr[1];
+        second_largest = arr[0];
+    }
+
+    // Step 4: Find second largest
+    for (i = 2; i < n; i++) {
+        if (arr[i] > largest) {
+            second_largest = largest;
+            largest = arr[i];
+        } else if (arr[i] > second_largest && arr[i] != largest) {
+            second_largest = arr[i];
+        }
+    }
+
+    printf("The second largest element is: %d\n", second_largest);
+
+    return 0;
+}
+
+
+
+
+Q2.) WAP to read a list of integers and store it in a single dimensional array. Write a C
+program to count and display positive, negative, odd, and even numbers in an array.
+
+code:-
+
+#include <stdio.h>
+
+int main() {
+    int n, i;
+    
+    // Step 1: Input the number of elements
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    int arr[n];
+
+    // Step 2: Read array elements
+    printf("Enter %d integers:\n", n);
+    for (i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    // Step 3: Initialize counters
+    int positive = 0, negative = 0, odd = 0, even = 0;
+
+    // Step 4: Count numbers
+    for (i = 0; i < n; i++) {
+        if (arr[i] >= 0)
+            positive++;
+        else
+            negative++;
+
+        if (arr[i] % 2 == 0)
+            even++;
+        else
+            odd++;
+    }
+
+    // Step 5: Display results
+    printf("Count of positive numbers: %d\n", positive);
+    printf("Count of negative numbers: %d\n", negative);
+    printf("Count of even numbers: %d\n", even);
+    printf("Count of odd numbers: %d\n", odd);
+
+    return 0;
+}
+
+
+
+Q3.) WAP to read a list of integers and store it in a single dimensional array. Write a C
+program to find the frequency of a particular number in a list of integers.
+
+code:-
+
+#include <stdio.h>
+
+int main() {
+    int n, i, num, count = 0;
+    
+    // Step 1: Input number of elements
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    int arr[n];
+
+    // Step 2: Read array elements
+    printf("Enter %d integers:\n", n);
+    for (i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    // Step 3: Input the number whose frequency we want
+    printf("Enter the number to find its frequency: ");
+    scanf("%d", &num);
+
+    // Step 4: Count frequency
+    for (i = 0; i < n; i++) {
+        if (arr[i] == num) {
+            count++;
+        }
+    }
+
+    // Step 5: Display result
+    printf("The frequency of %d is: %d\n", num, count);
+
+    return 0;
+}
+
+
+Q4.)  WAP that reads two matrices A (m x n) and B (p x q) and computes the product A
+and B. Read matrix A and matrix B in row major order respectively. Print both the
+input matrices and resultant matrix with suitable headings and output should be in
+matrix format only. Program must check the compatibility of orders of the matrices
+for multiplication. Report appropriate message in case of incompatibility
+
+code:-
+
+#include <stdio.h>
+
+int main() {
+    int m, n, p, q, i, j, k;
+
+    // Step 1: Input matrix A dimensions
+    printf("Enter rows and columns of matrix A (m n): ");
+    scanf("%d %d", &m, &n);
+
+    int A[m][n];
+
+    printf("Enter elements of matrix A (%d x %d):\n", m, n);
+    for (i = 0; i < m; i++) {
+        for (j = 0; j < n; j++) {
+            scanf("%d", &A[i][j]);
+        }
+    }
+
+    // Step 2: Input matrix B dimensions
+    printf("Enter rows and columns of matrix B (p q): ");
+    scanf("%d %d", &p, &q);
+
+    int B[p][q];
+
+    printf("Enter elements of matrix B (%d x %d):\n", p, q);
+    for (i = 0; i < p; i++) {
+        for (j = 0; j < q; j++) {
+            scanf("%d", &B[i][j]);
+        }
+    }
+
+    // Step 3: Check compatibility
+    if (n != p) {
+        printf("\nMatrix multiplication not possible!\n");
+        printf("Columns of A (%d) != Rows of B (%d)\n", n, p);
+        return 0;
+    }
+
+    // Step 4: Compute multiplication
+    int C[m][q];
+    for (i = 0; i < m; i++) {
+        for (j = 0; j < q; j++) {
+            C[i][j] = 0;
+            for (k = 0; k < n; k++) {
+                C[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+
+    // Step 5: Print matrices
+    printf("\nMatrix A (%d x %d):\n", m, n);
+    for (i = 0; i < m; i++) {
+        for (j = 0; j < n; j++) {
+            printf("%4d", A[i][j]);
+        }
+        printf("\n");
+    }
+
+    printf("\nMatrix B (%d x %d):\n", p, q);
+    for (i = 0; i < p; i++) {
+        for (j = 0; j < q; j++) {
+            printf("%4d", B[i][j]);
+        }
+        printf("\n");
+    }
+
+    printf("\nResultant Matrix C = A × B (%d x %d):\n", m, q);
+    for (i = 0; i < m; i++) {
+        for (j = 0; j < q; j++) {
+            printf("%4d", C[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+
