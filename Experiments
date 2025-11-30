@@ -832,3 +832,743 @@ int main() {
     return 0;
 }
 
+                                                                   [ Experiment : 06 ]   [Functions]
+
+1)Develop a recursive and non-recursive function FACT(num) to find the factorial of
+a number, n!, defined by FACT(n) = 1, if n = 0. Otherwise, FACT(n) = n * FACT(n1). Using this function, write a C program to compute the binomial coefficient.
+Tabulate the results for different values of n and r with suitable messages. 
+
+code:-
+#include <stdio.h>
+
+// Recursive factorial function
+long FACT(int n) {
+    if (n == 0)
+        return 1;
+    else
+        return n * FACT(n - 1);
+}
+
+// Non-recursive factorial function
+long FACT_NR(int n) {
+    long fact = 1;
+    for (int i = 1; i <= n; i++) {
+        fact *= i;
+    }
+    return fact;
+}
+
+// Function to compute nCr using recursive factorial
+long NCR(int n, int r) {
+    return FACT(n) / (FACT(r) * FACT(n - r));
+}
+
+int main() {
+    int n, r;
+
+    printf("Enter value of n: ");
+    scanf("%d", &n);
+    printf("Enter value of r: ");
+    scanf("%d", &r);
+
+    if (r > n || n < 0 || r < 0) {
+        printf("Invalid input! r must be ≤ n and n, r must be non-negative.\n");
+        return 0;
+    }
+
+    printf("\nUsing Recursive FACT():\n");
+    printf("Factorial of %d = %ld\n", n, FACT(n));
+    printf("Factorial of %d = %ld\n", r, FACT(r));
+    printf("Factorial of %d = %ld\n", n - r, FACT(n - r));
+    printf("Binomial Coefficient C(%d, %d) = %ld\n\n", n, r, NCR(n, r));
+
+    printf("Using Non-Recursive FACT_NR():\n");
+    long fact_n  = FACT_NR(n);
+    long fact_r  = FACT_NR(r);
+    long fact_nr = FACT_NR(n - r);
+
+    printf("Factorial of %d = %ld\n", n, fact_n);
+    printf("Factorial of %d = %ld\n", r, fact_r);
+    printf("Factorial of %d = %ld\n", n - r, fact_nr);
+
+    long ncr_nr = fact_n / (fact_r * fact_nr);
+    printf("Binomial Coefficient C(%d, %d) = %ld\n\n", n, r, ncr_nr);
+
+    // Table of results
+    printf("\n--------------------------------------------\n");
+    printf("  n    r      nCr (Using Recursive FACT)    \n");
+    printf("--------------------------------------------\n");
+    for (int i = 0; i <= n; i++) {
+        if (i <= n) {
+            printf("  %d    %d          %ld\n", n, i, NCR(n, i));
+        }
+    }
+    printf("--------------------------------------------\n");
+
+    return 0;
+}
+
+
+
+2)Develop a recursive function GCD (num1, num2) that accepts two integer
+arguments. Write a C program that invokes this function to find the greatest
+common divisor of two given integers. 
+
+code:
+#include <stdio.h>
+
+// Recursive function to compute GCD
+int GCD(int num1, int num2) {
+    if (num2 == 0)
+        return num1;           // Base case
+    else
+        return GCD(num2, num1 % num2);  // Recursive step
+}
+
+int main() {
+    int a, b;
+
+    printf("Enter two integers: ");
+    scanf("%d %d", &a, &b);
+
+    // If negative numbers, convert to positive
+    if (a < 0) a = -a;
+    if (b < 0) b = -b;
+
+    int result = GCD(a, b);
+
+    printf("The Greatest Common Divisor (GCD) of %d and %d is: %d\n", a, b, result);
+
+    return 0;
+}
+
+
+3) Develop a recursive function FIBO (num) that accepts an integer argument. Write
+a C program that invokes this function to generate the Fibonacci sequence up to
+num. 
+
+code:-
+#include <stdio.h>
+
+// Recursive Fibonacci function
+int FIBO(int num) {
+    if (num == 0)
+        return 0;
+    else if (num == 1)
+        return 1;
+    else
+        return FIBO(num - 1) + FIBO(num - 2);
+}
+
+int main() {
+    int n;
+
+    printf("Enter how many Fibonacci terms you want: ");
+    scanf("%d", &n);
+
+    if (n <= 0) {
+        printf("Please enter a positive integer.\n");
+        return 0;
+    }
+
+    printf("Fibonacci sequence up to %d terms:\n", n);
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", FIBO(i));
+    }
+
+    printf("\n");
+    return 0;
+}
+
+
+4) Develop a C function ISPRIME (num) that accepts an integer argument and
+returns 1 if the argument is prime, a 0 otherwise. Write a C program that invokes
+this function to generate prime numbers between the given ranges. 
+
+code:
+#include <stdio.h>
+
+// Function to check if a number is prime
+int ISPRIME(int num) {
+    if (num <= 1)
+        return 0;   // 0 and 1 are not prime
+
+    for (int i = 2; i * i <= num; i++) {
+        if (num % i == 0)
+            return 0;  // Not prime
+    }
+    return 1;  // Prime
+}
+
+int main() {
+    int start, end;
+
+    printf("Enter start of range: ");
+    scanf("%d", &start);
+    printf("Enter end of range: ");
+    scanf("%d", &end);
+
+    if (start > end) {
+        printf("Invalid range! Start must be <= End.\n");
+        return 0;
+    }
+
+    printf("Prime numbers between %d and %d are:\n", start, end);
+
+    for (int i = start; i <= end; i++) {
+        if (ISPRIME(i))
+            printf("%d ", i);
+    }
+
+    printf("\n");
+    return 0;
+}
+
+
+5)  Develop a function REVERSE (str) that accepts a string argument. Write a C
+program that invokes this function to find the reverse of a given string. 
+
+code:
+#include <stdio.h>
+#include <string.h>
+
+// Function to reverse the string
+void REVERSE(char str[]) {
+    int i, j;
+    char temp;
+
+    i = 0;
+    j = strlen(str) - 1;
+
+    while (i < j) {
+        temp = str[i];
+        str[i] = str[j];
+        str[j] = temp;
+        i++;
+        j--;
+    }
+}
+
+int main() {
+    char str[100];
+
+    printf("Enter a string: ");
+    scanf("%[^\n]", str);   // Read string including spaces
+
+    REVERSE(str);
+
+    printf("Reversed string: %s\n", str);
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+                                                                     [ Experiment: 07 ]  [ Structures and unions ]
+
+1) Write a C program that uses functions to perform the following operations:
+a. Reading a complex number.
+b. Writing a complex number.
+c. Addition and subtraction of two complex numbers 
+
+code:
+#include <stdio.h>
+
+// Structure for complex number
+struct complex {
+    float real;
+    float imag;
+};
+
+// Function to read a complex number
+struct complex readComplex() {
+    struct complex c;
+    printf("Enter real part: ");
+    scanf("%f", &c.real);
+    printf("Enter imaginary part: ");
+    scanf("%f", &c.imag);
+    return c;
+}
+
+// Function to display a complex number
+void writeComplex(struct complex c) {
+    if (c.imag >= 0)
+        printf("%.2f + %.2fi", c.real, c.imag);
+    else
+        printf("%.2f - %.2fi", c.real, -c.imag);
+}
+
+// Function for addition of two complex numbers
+struct complex addComplex(struct complex c1, struct complex c2) {
+    struct complex result;
+    result.real = c1.real + c2.real;
+    result.imag = c1.imag + c2.imag;
+    return result;
+}
+
+// Function for subtraction of two complex numbers
+struct complex subComplex(struct complex c1, struct complex c2) {
+    struct complex result;
+    result.real = c1.real - c2.real;
+    result.imag = c1.imag - c2.imag;
+    return result;
+}
+
+int main() {
+    struct complex a, b, sum, diff;
+
+    printf("Enter first complex number:\n");
+    a = readComplex();
+
+    printf("\nEnter second complex number:\n");
+    b = readComplex();
+
+    sum = addComplex(a, b);
+    diff = subComplex(a, b);
+
+    printf("\nFirst Complex Number: ");
+    writeComplex(a);
+
+    printf("\nSecond Complex Number: ");
+    writeComplex(b);
+
+    printf("\n\nAddition Result: ");
+    writeComplex(sum);
+
+    printf("\nSubtraction Result: ");
+    writeComplex(diff);
+
+    printf("\n");
+    return 0;
+}
+
+
+2)  Write a C program to compute the monthly pay of 100 employees using each
+employee‗s name, basic pay. The DA is computed as 52% of the basic pay.
+Gross-salary (basic pay + DA). Print the employees name and gross salary. 
+
+code:
+
+#include <stdio.h>
+
+struct Employee {
+    char name[50];
+    float basic_pay;
+    float da;
+    float gross_salary;
+};
+
+int main() {
+    struct Employee emp[100];
+    int i;
+
+    printf("Enter details of 100 employees:\n");
+
+    for (i = 0; i < 100; i++) {
+        printf("\nEmployee %d\n", i + 1);
+        printf("Enter name: ");
+        scanf("%s", emp[i].name);
+        printf("Enter basic pay: ");
+        scanf("%f", &emp[i].basic_pay);
+
+        // Calculate DA and Gross Salary
+        emp[i].da = 0.52 * emp[i].basic_pay;
+        emp[i].gross_salary = emp[i].basic_pay + emp[i].da;
+    }
+
+    printf("\n---------------------------------------------\n");
+    printf("        Employee Name & Gross Salary\n");
+    printf("---------------------------------------------\n");
+
+    for (i = 0; i < 100; i++) {
+        printf("%-20s  %.2f\n", emp[i].name, emp[i].gross_salary);
+    }
+
+    return 0;
+}
+
+
+
+3) Create a Book structure containing book_id, title, author name and price. Write a
+C program to pass a structure as a function argument and print the book details. 
+
+code:-
+
+#include <stdio.h>
+
+// Structure definition
+struct Book {
+    int book_id;
+    char title[50];
+    char author[50];
+    float price;
+};
+
+// Function to display book details (structure passed as argument)
+void displayBook(struct Book b) {
+    printf("\n----- Book Details -----\n");
+    printf("Book ID      : %d\n", b.book_id);
+    printf("Title        : %s\n", b.title);
+    printf("Author       : %s\n", b.author);
+    printf("Price        : %.2f\n", b.price);
+}
+
+int main() {
+    struct Book b1;
+
+    // Reading book details
+    printf("Enter Book ID: ");
+    scanf("%d", &b1.book_id);
+
+    printf("Enter Title: ");
+    scanf(" %[^\n]", b1.title);   // Reads full string including spaces
+
+    printf("Enter Author Name: ");
+    scanf(" %[^\n]", b1.author);
+
+    printf("Enter Price: ");
+    scanf("%f", &b1.price);
+
+    // Passing structure to function
+    displayBook(b1);
+
+    return 0;
+}
+
+
+
+4)  . Create a union containing 6 strings: name, home_address, hostel_address, city,
+state and zip. Write a C program to display your present address. 
+
+code:-
+
+#include <stdio.h>
+
+// Union containing different address fields
+union Address {
+    char name[50];
+    char home_address[100];
+    char hostel_address[100];
+    char city[50];
+    char state[50];
+    char zip[10];
+};
+
+int main() {
+    union Address info;
+
+    printf("Enter your name: ");
+    scanf(" %[^\n]", info.name);
+
+    printf("Enter your present address (home or hostel): ");
+    scanf(" %[^\n]", info.home_address);   // storing present address
+
+    printf("Enter city: ");
+    scanf(" %[^\n]", info.city);
+
+    printf("Enter state: ");
+    scanf(" %[^\n]", info.state);
+
+    printf("Enter ZIP code: ");
+    scanf(" %[^\n]", info.zip);
+
+    // Displaying present address
+    printf("\n----- Present Address -----\n");
+    printf("Name : %s\n", info.name);
+    printf("Address : %s\n", info.home_address);
+    printf("City : %s\n", info.city);
+    printf("State : %s\n", info.state);
+    printf("ZIP : %s\n", info.zip);
+
+
+    return 0;
+}
+
+
+
+
+
+
+                                                          [ Experiment: 08 ]     [ Pointers ]
+
+1)  Declare different types of pointers (int, float, char) and initialize them with the
+addresses of variables. Print the values of both the pointers and the variables they
+point to.
+
+
+code:
+
+#include <stdio.h>
+
+int main() {
+    int a = 10;
+    float b = 15.75;
+    char c = 'X';
+
+    // Pointer declarations
+    int *iptr = &a;
+    float *fptr = &b;
+    char *cptr = &c;
+
+    printf("----- Integer Pointer -----\n");
+    printf("Value of a: %d\n", a);
+    printf("Address stored in iptr: %p\n", iptr);
+    printf("Value pointed by iptr: %d\n\n", *iptr);
+
+    printf("----- Float Pointer -----\n");
+    printf("Value of b: %.2f\n", b);
+    printf("Address stored in fptr: %p\n", fptr);
+    printf("Value pointed by fptr: %.2f\n\n", *fptr);
+
+    printf("----- Char Pointer -----\n");
+    printf("Value of c: %c\n", c);
+    printf("Address stored in cptr: %p\n", cptr);
+    printf("Value pointed by cptr: %c\n", *cptr);
+
+    return 0;
+}
+
+
+#include <stdio.h>
+
+int main() {
+    int a = 10;
+    float b = 20.5;
+    char c = 'Z';
+
+    int *iptr = &a;
+    float *fptr = &b;
+    char *cptr = &c;
+
+    printf("------ ORIGINAL POINTERS ------\n");
+    printf("iptr = %p, *iptr = %d\n", iptr, *iptr);
+    printf("fptr = %p, *fptr = %.2f\n", fptr, *fptr);
+    printf("cptr = %p, *cptr = %c\n\n", cptr, *cptr);
+
+    // Pointer Increment
+    iptr++;
+    fptr++;
+    cptr++;
+
+    printf("------ AFTER INCREMENT ------\n");
+    printf("iptr = %p  (int pointer +1)\n", iptr);
+    printf("fptr = %p  (float pointer +1)\n", fptr);
+    printf("cptr = %p  (char pointer +1)\n\n", cptr);
+
+    // Pointer Decrement
+    iptr--;
+    fptr--;
+    cptr--;
+
+    printf("------ AFTER DECREMENT (Back to Original) ------\n");
+    printf("iptr = %p\n", iptr);
+    printf("fptr = %p\n", fptr);
+    printf("cptr = %p\n", cptr);
+
+    return 0;
+}
+
+2) . Perform pointer arithmetic (increment and decrement) on pointers of different data
+types. Observe how the memory addresses change and the effects on data
+access.
+
+
+code:
+
+#include <stdio.h>
+
+int main() {
+    int a = 10;
+    float b = 20.5;
+    char c = 'Z';
+
+    int *iptr = &a;
+    float *fptr = &b;
+    char *cptr = &c;
+
+    printf("------ ORIGINAL POINTERS ------\n");
+    printf("iptr = %p, *iptr = %d\n", iptr, *iptr);
+    printf("fptr = %p, *fptr = %.2f\n", fptr, *fptr);
+    printf("cptr = %p, *cptr = %c\n\n", cptr, *cptr);
+
+    // Pointer Increment
+    iptr++;
+    fptr++;
+    cptr++;
+
+    printf("------ AFTER INCREMENT ------\n");
+    printf("iptr = %p  (int pointer +1)\n", iptr);
+    printf("fptr = %p  (float pointer +1)\n", fptr);
+    printf("cptr = %p  (char pointer +1)\n\n", cptr);
+
+    // Pointer Decrement
+    iptr--;
+    fptr--;
+    cptr--;
+
+    printf("------ AFTER DECREMENT (Back to Original) ------\n");
+    printf("iptr = %p\n", iptr);
+    printf("fptr = %p\n", fptr);
+    printf("cptr = %p\n", cptr);
+
+    return 0;
+}
+
+
+
+3) Write a function that accepts pointers as parameters. Pass variables by reference
+using pointers and modify their values within the function.
+
+
+code:
+
+
+#include <stdio.h>
+
+// Function that modifies values using pointers
+void modifyValues(int *x, float *y, char *z) {
+    *x = *x + 10;     // increase integer by 10
+    *y = *y * 2;      // double the float value
+    *z = 'A';         // change the character to A
+}
+
+int main() {
+    int a = 5;
+    float b = 3.5;
+    char c = 'X';
+
+    printf("Before Modification:\n");
+    printf("a = %d\n", a);
+    printf("b = %.2f\n", b);
+    printf("c = %c\n", c);
+
+    // Passing variables by reference
+    modifyValues(&a, &b, &c);
+
+    printf("\nAfter Modification:\n");
+    printf("a = %d\n", a);
+    printf("b = %.2f\n", b);
+    printf("c = %c\n", c);
+
+    return 0;
+}
+
+
+
+
+
+                                                                       [ Experiment: 09 ]   [ File Handling In C ]
+
+1) Write a program to create a new file and write text into it.
+
+code:
+
+#include <stdio.h>
+
+int main() {
+    FILE *fp;
+    char text[200];
+
+    // Create (or overwrite) the file
+    fp = fopen("myfile.txt", "w");
+
+    if (fp == NULL) {
+        printf("Error creating file!\n");
+        return 1;
+    }
+
+    printf("Enter text to write into the file:\n");
+    fgets(text, sizeof(text), stdin);  // Read input including spaces
+
+    // Write text to the file
+    fputs(text, fp);
+
+    printf("Text written to myfile.txt successfully.\n");
+
+    // Close the file
+
+
+    fclose(fp);
+
+    return 0;
+}
+
+
+
+2)  Open an existing file and read its content character by character, and then close
+the file.
+
+
+code:
+
+
+#include <stdio.h>
+
+int main() {
+    FILE *fp;
+    char ch;
+
+    // Open an existing file in read mode
+    fp = fopen("myfile.txt", "r");
+
+    if (fp == NULL) {
+        printf("Error opening file! File may not exist.\n");
+        return 1;
+    }
+
+    printf("File content:\n");
+
+    // Read character by character
+    while ((ch = fgetc(fp)) != EOF) {
+        putchar(ch);   // Print each character
+    }
+
+    // Close the file
+    fclose(fp);
+
+    return 0;
+}
+
+
+
+3) Open a file, read its content line by line, and display each line on the console.
+
+code:
+
+#include <stdio.h>
+
+int main() {
+    FILE *fp;
+    char line[200];
+
+    // Open the file in read mode
+    fp = fopen("myfile.txt", "r");
+
+    if (fp == NULL) {
+        printf("Error opening file! File may not exist.\n");
+        return 1;
+    }
+
+    printf("File content:\n\n");
+
+    // Read file line by line
+    while (fgets(line, sizeof(line), fp) != NULL) {
+        printf("%s", line);   // Print each line
+    }
+
+    // Close the file
+    fclose(fp);
+
+    return 0;
+}
+
+
+
+
